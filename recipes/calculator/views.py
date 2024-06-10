@@ -18,7 +18,16 @@ DATA = {
     },
 }
 
+
 def recipes_views(request, dish_name):
     number = int(request.GET.get("servings", 1))
-    context = DATA[dish_name]
+
+    dishes_data = DATA
+    ingredients = dishes_data[dish_name]
+    
+    for name, quantaty in ingredients.items():
+        ingredients[name] = ingredients[name] * number
+
+    context = {'name': ingredients}
+
     return render(request, 'index.html', context)
