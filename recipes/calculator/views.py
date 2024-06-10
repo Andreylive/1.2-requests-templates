@@ -20,5 +20,5 @@ DATA = {
 
 def recipes_views(request, dish_name):
     number = int(request.GET.get("servings", 1))
-    context = DATA
+    context = DATA[dish_name]
     return render(request, 'index.html', context)
