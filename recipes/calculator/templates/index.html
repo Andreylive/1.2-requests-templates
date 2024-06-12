@@ -6,10 +6,13 @@
 </head>
 <body>
 
-{% for ingredient, amount in name.items %}
-    <p>{{ ingredient }}: {{ amount }}</p>
-{% empty %}
-    <p>Такого рецепта не знаю :(</p>
-{% endfor %}
+{% if quantity_per_person %}
+    {% for ingridient, amount in quantity_per_person.items %}
+    {{ ingredient }}: {{ amount }}
+    {% endfor %}
+{% else %}
+    Такого рецепта не знаю
+{% endif %}
+
 </body>
 </html>

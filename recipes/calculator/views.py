@@ -1,34 +1,31 @@
 from django.shortcuts import render
 
+DATA = {
+    'omlet': {
+        'яйца, шт': 2,
+        'молоко, л': 0.1,
+        'соль, ч.л.': 0.5,
+    },
+    'pasta': {
+        'макароны, г': 0.3,
+        'сыр, г': 0.05,
+    },
+    'buter': {
+        'хлеб, ломтик': 1,
+        'колбаса, ломтик': 1,
+        'сыр, ломтик': 1,
+        'помидор, ломтик': 1,
+    },
+}
 
-def recipes_views(request, dish_name):
+def recipes_views(request, data, dish_name):
+    quantity_per_person = dict()
 
-    DATA = {
-        'omlet': {
-            'яйца, шт': 2,
-            'молоко, л': 0.1,
-            'соль, ч.л.': 0.5,
-        },
-        'pasta': {
-            'макароны, г': 0.3,
-            'сыр, г': 0.05,
-        },
-        'buter': {
-            'хлеб, ломтик': 1,
-            'колбаса, ломтик': 1,
-            'сыр, ломтик': 1,
-            'помидор, ломтик': 1,
-        },
-    }
+    number_of_person = int(request.GET.get("servings", 1))
 
-    number = int(request.GET.get("servings", 1))
+    for name, quantity in data[dish_name].items():
+        quantity_per_person.setdefault(name, quantity * number_of_person)
 
-    dishes_data = DATA
-    ingredients = dishes_data[dish_name]
+    print(quantity_per_person)
 
-    for name, quantaty in ingredients.items():
-        ingredients[name] = ingredients[name] * number
-
-    context = {'name': ingredients}
-
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', quantity_per_person)
