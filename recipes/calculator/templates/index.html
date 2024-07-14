@@ -5,14 +5,13 @@
     <title>Рецепты</title>
 </head>
 <body>
-
-{% if quantity_per_person %}
-    {% for ingridient, amount in quantity_per_person.items %}
-    {{ ingredient }}: {{ amount }}
+    {% if data %}
+    <p>Для {{ dish_name }} на {{ persons }} персон(ы) необходимо:</p><br>
+    {% for ingridient, amount in data.items %}
+        <p>{{ ingridient }}: {{ amount }}</p>
     {% endfor %}
-{% else %}
+    {% else %}
     Такого рецепта не знаю
-{% endif %}
-
+    {% endif %}
 </body>
 </html>

@@ -26,6 +26,10 @@ def recipes_views(request, data, dish_name):
     for name, quantity in data[dish_name].items():
         quantity_per_person.setdefault(name, quantity * number_of_person)
 
-    print(quantity_per_person)
-
-    return render(request, 'index.html', quantity_per_person)
+    context={
+        'data': quantity_per_person, 
+        'dish_name': dish_name, 
+        'persons': number_of_person
+        }
+        
+    return render(request, 'index.html', context)
